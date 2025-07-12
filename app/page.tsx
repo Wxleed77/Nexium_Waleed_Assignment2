@@ -38,7 +38,7 @@ export default function HomePage() {
       <div className="absolute -top-32 -left-32 w-96 h-96 bg-gradient-to-br from-purple-500/30 to-pink-500/30 rounded-full blur-3xl z-0"></div>
       <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-gradient-to-tr from-cyan-500/30 to-blue-500/30 rounded-full blur-3xl z-0"></div>
       <motion.div
-        className="relative z-10 backdrop-blur-2xl bg-white/10 p-10 rounded-3xl max-w-2xl w-full shadow-2xl border border-white/20"
+        className="relative z-10 backdrop-blur-2xl bg-white/10 p-10 rounded-3xl max-w-2xl w-full shadow-2xl border border-white/30"
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
@@ -47,41 +47,42 @@ export default function HomePage() {
         <div className="flex flex-col items-center mb-8">
           <div className="flex items-center gap-3 mb-2">
             <Sparkle className="text-purple-400 w-8 h-8 drop-shadow-lg animate-spin-slow" />
-            <h1 className="text-4xl font-extrabold tracking-tight bg-gradient-to-r from-purple-300 via-pink-300 to-cyan-300 bg-clip-text text-transparent drop-shadow-xl">
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-purple-300 via-pink-300 to-cyan-300 bg-clip-text text-transparent drop-shadow-xl">
               Blog Summariser
             </h1>
           </div>
-          <p className="text-white/70 text-lg font-medium text-center max-w-lg">
+          <p className="text-white/80 text-lg font-medium text-center max-w-lg">
             Instantly summarize any blog post and get an Urdu translation. Powered by AI, designed for clarity.
           </p>
         </div>
 
         {/* Toggle with Labels */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-10">
           <label className="flex items-center gap-2 text-white/80 font-medium">
             <ServerCog className="w-5 h-5 text-cyan-400" />
             <span className="text-base">Translation Method:</span>
           </label>
           <div className="flex items-center gap-4">
             {/* Dictionary Label */}
-            <div className={`flex items-center gap-1 text-sm px-2 py-1 rounded-full transition-colors ${method === "dictionary" ? "bg-white/20 text-white" : "text-white/60"}`}>
+            <div className={`flex items-center gap-1 text-sm px-3 py-1 rounded-full transition-colors ${method === "dictionary" ? "bg-white/30 text-white shadow" : "text-white/60"}`}>
               <Bot className="w-4 h-4" />
               <span>Dictionary</span>
             </div>
             {/* Toggle */}
-            <div className="relative inline-flex items-center">
+            <label className="relative inline-flex items-center cursor-pointer group">
               <input
                 type="checkbox"
-                id="toggle"
                 className="sr-only peer"
                 checked={method === "api"}
                 onChange={(e) => setMethod(e.target.checked ? "api" : "dictionary")}
               />
-              <div className="w-14 h-8 bg-gray-600 peer-focus:outline-none rounded-full peer-checked:bg-gradient-to-r peer-checked:from-cyan-500 peer-checked:to-purple-500 transition-colors duration-300 ease-in-out shadow-inner"></div>
-              <div className="absolute left-1 top-1 bg-white w-6 h-6 rounded-full shadow-md transition-transform duration-300 transform peer-checked:translate-x-6 border-2 border-cyan-400"></div>
-            </div>
+              <span className="w-16 h-9 flex items-center bg-gradient-to-r from-cyan-500/40 to-purple-500/40 rounded-full p-1 duration-300 border-2 border-white/20 shadow-inner group-hover:from-cyan-400/60 group-hover:to-purple-400/60"></span>
+              <span
+                className="absolute left-1 top-1 h-7 w-7 bg-white rounded-full shadow-md transform duration-300 peer-checked:translate-x-7"
+              />
+            </label>
             {/* API Label */}
-            <div className={`flex items-center gap-1 text-sm px-2 py-1 rounded-full transition-colors ${method === "api" ? "bg-white/20 text-white" : "text-white/60"}`}>
+            <div className={`flex items-center gap-1 text-sm px-3 py-1 rounded-full transition-colors ${method === "api" ? "bg-white/30 text-white shadow" : "text-white/60"}`}>
               <ServerCog className="w-4 h-4" />
               <span>API</span>
             </div>
@@ -97,6 +98,9 @@ export default function HomePage() {
           <BlogForm onSubmit={handleSubmit} />
         </motion.div>
 
+        {/* Divider */}
+        <div className="my-8 border-t border-white/20" />
+
         {/* Loader */}
         {loading && (
           <div className="mt-8 text-center flex items-center justify-center gap-3">
@@ -108,14 +112,14 @@ export default function HomePage() {
         {/* Animated summary card */}
         {(summary || urduSummary) && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
             className="space-y-6 mt-8"
           >
             {summary && (
-              <div className="relative group p-1 rounded-2xl bg-gradient-to-r from-cyan-400/40 via-purple-400/40 to-pink-400/40 shadow-lg hover:shadow-2xl transition-shadow duration-300">
-                <div className="bg-white/10 rounded-2xl p-5">
+              <div className="relative group p-1 rounded-2xl bg-gradient-to-r from-cyan-400/40 via-purple-400/40 to-pink-400/40 shadow-xl hover:shadow-2xl transition-shadow duration-300 border border-white/20">
+                <div className="bg-white/10 rounded-2xl p-6">
                   <h2 className="text-xl font-bold mb-2 flex items-center gap-2">
                     <ServerCog className="text-cyan-400" /> English Summary
                   </h2>
@@ -124,8 +128,8 @@ export default function HomePage() {
               </div>
             )}
             {urduSummary && (
-              <div className="relative group p-1 rounded-2xl bg-gradient-to-r from-green-400/40 via-cyan-400/40 to-purple-400/40 shadow-lg hover:shadow-2xl transition-shadow duration-300">
-                <div className="bg-white/10 rounded-2xl p-5">
+              <div className="relative group p-1 rounded-2xl bg-gradient-to-r from-green-400/40 via-cyan-400/40 to-purple-400/40 shadow-xl hover:shadow-2xl transition-shadow duration-300 border border-white/20">
+                <div className="bg-white/10 rounded-2xl p-6">
                   <h2 className="text-xl font-bold mb-2 flex items-center gap-2">
                     <Bot className="text-green-400" /> اردو خلاصہ
                   </h2>
