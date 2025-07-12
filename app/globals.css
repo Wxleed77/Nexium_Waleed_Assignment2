@@ -79,10 +79,8 @@
 }
 
 .urdu-text {
-  font-family: "Noto Nastaliq Urdu", serif;
+  font-family: 'Noto Nastaliq Urdu', serif;
   direction: rtl;
-  text-align: right;
-  font-size: 1.15rem;
 }
 
 .toggle-btn {
@@ -141,5 +139,26 @@ select {
   }
   body {
     @apply bg-background text-foreground;
+      
   }
+}
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+.toggle-checkbox:checked {
+  left: 8px;
+  background-color: #22d3ee;
+  transform: translateX(100%);
+}
+.toggle-checkbox {
+  top: 0;
+  left: 0;
+}
+
+.toggle-label {
+  display: block;
+  width: 3.5rem;
+  height: 2rem;
+  position: relative;
 }

@@ -1,15 +1,20 @@
 "use client"
 
-
 import BlogForm from "@/components/ui/BlogForm"
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
+import { Languages, Loader2, Sparkles } from "lucide-react"
+import { motion } from "framer-motion"
+
+
+
+
+
 
 export default function HomePage() {
   const [loading, setLoading] = useState(false)
   const [summary, setSummary] = useState("")
   const [urduSummary, setUrduSummary] = useState("")
-  const [method, setMethod] = useState<"api" | "dictionary">("api")
+  const [method, setMethod] = useState<"api" | "dictionary">("dictionary")
 
   const handleSubmit = async (url: string) => {
     setLoading(true)
@@ -25,47 +30,72 @@ export default function HomePage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-tr from-slate-900 to-slate-800 text-white p-6 flex items-center justify-center">
-      <div className="group backdrop-blur-xl bg-white/10 p-10 rounded-3xl max-w-3xl w-full shadow-2xl border border-white/30 hover:shadow-2xl transition-shadow duration-200">
-        <h1 className="text-4xl font-extrabold text-center mb-6 drop-shadow-lg tracking-tight">📝 Blog Summariser</h1>
+    <main className="min-h-screen bg-gradient-to-tr from-[#0f172a] to-[#1e293b] text-white p-6 flex items-center justify-center">
+      <div className="backdrop-blur-lg bg-white/10 p-8 rounded-2xl max-w-3xl w-full shadow-xl border border-white/20 transition-all duration-300 hover:scale-[1.01]">
 
-        <div className="flex justify-center mb-8 gap-4">
-          <span className="text-lg font-medium">Translation Method:</span>
-          <div className="flex gap-2 bg-white/10 rounded-full p-1 shadow-inner border border-white/20">
-            <Button
-              type="button"
-              variant={method === "api" ? "secondary" : "ghost"}
-              className={`rounded-full px-5 py-2 transition-all duration-150 ${method === "api" ? "ring-2 ring-white/40" : ""}`}
-              onClick={() => setMethod("api")}
-            >
-              API
-            </Button>
-            <Button
-              type="button"
-              variant={method === "dictionary" ? "secondary" : "ghost"}
-              className={`rounded-full px-5 py-2 transition-all duration-150 ${method === "dictionary" ? "ring-2 ring-white/40" : ""}`}
-              onClick={() => setMethod("dictionary")}
-            >
-              Dictionary
-            </Button>
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-3xl font-bold tracking-tight">Blog Summariser</h1>
+          <Sparkles className="text-purple-400" />
+        </div>
+
+        <div className="flex items-center justify-between mb-4">
+          <label className="flex items-center gap-2 text-white/80">
+            <Languages className="w-5 h-5 text-cyan-400" />
+            <span className="text-sm">Translation Method:</span>
+          </label>
+
+          <div className="relative inline-block w-16 align-middle select-none transition duration-200 ease-in">
+            <input
+              type="checkbox"
+              name="toggle"
+              id="toggle"
+              checked={method === "api"}
+              onChange={(e) => setMethod(e.target.checked ? "api" : "dictionary")}
+              className="toggle-checkbox absolute block w-8 h-8 rounded-full bg-white border-4 appearance-none cursor-pointer top-0 left-0 transition-transform duration-300 ease-in-out"
+            />
+            <label
+              htmlFor="toggle"
+              className="toggle-label block overflow-hidden h-8 rounded-full bg-cyan-600 cursor-pointer"
+            ></label>
           </div>
         </div>
 
         <BlogForm onSubmit={handleSubmit} />
-        {loading && <p className="mt-8 text-center text-lg animate-pulse">⏳ Summarizing...</p>}
 
-        {summary && (
-          <div className="mt-8 p-6 bg-white/10 rounded-2xl border border-white/30 shadow-lg backdrop-blur-xl">
-            <h2 className="text-2xl font-semibold mb-3 text-white/90">English Summary:</h2>
-            <p className="text-white/90 leading-relaxed">{summary}</p>
+        {loading && (
+          <div className="mt-6 text-center flex items-center justify-center gap-2">
+            <Loader2 className="animate-spin" />
+            <p>Summarizing and translating...</p>
           </div>
         )}
 
+        {summary && (
+
+         <motion.div
+    className="mt-6 p-4 bg-white/5 rounded-xl border border-white/20 hover:bg-white/10"
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.4 }}
+  >
+    <h2 className="text-xl font-semibold mb-2 flex items-center gap-2">
+      <Languages className="text-cyan-400" /> English Summary
+    </h2>
+    <p className="text-white/90 leading-relaxed">{summary}</p>
+  </motion.div>
+        )}
+
         {urduSummary && (
-          <div className="mt-8 p-6 bg-white/10 rounded-2xl border border-white/30 shadow-lg backdrop-blur-xl">
-            <h2 className="text-2xl font-semibold mb-3 text-white/90">اردو خلاصہ:</h2>
-            <p className="text-white/90 urdu-text leading-relaxed">{urduSummary}</p>
-          </div>
+           <motion.div
+    className="mt-6 p-4 bg-white/5 rounded-xl border border-white/20 hover:bg-white/10"
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.4, delay: 0.1 }}
+  >
+    <h2 className="text-xl font-semibold mb-2 flex items-center gap-2">
+      <Languages className="text-green-400" /> اردو خلاصہ
+    </h2>
+    <p className="text-white/90 urdu-text leading-loose">{urduSummary}</p>
+  </motion.div>
         )}
       </div>
     </main>
