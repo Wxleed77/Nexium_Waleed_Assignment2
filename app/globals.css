@@ -156,9 +156,16 @@ body {
   left: 0;
 }
 
+/* Optional: improves toggle thumb shadows if needed */
+input[type="checkbox"] + div + div {
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+
 .toggle-label {
   display: block;
   width: 3.5rem;
   height: 2rem;
   position: relative;
 }
+
