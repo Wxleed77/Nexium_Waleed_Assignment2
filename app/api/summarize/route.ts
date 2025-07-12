@@ -7,7 +7,7 @@ import { saveToMongo } from "@/lib/mongodb"
 
 export async function POST(req: NextRequest) {
   try {
-    const { url } = await req.json()
+    const { url, method } = await req.json() as { url: string, method?: "api" | "dictionary" }
 
     if (!url) {
       return NextResponse.json({ error: "Missing URL" }, { status: 400 })
@@ -20,12 +20,13 @@ export async function POST(req: NextRequest) {
     }
 
     const summary = summarizeText(fullText)
-    const summaryUrdu = translateToUrdu(summary)
+    const summaryUrdu = await translateToUrdu(summary, method || "dictionary")
 
+    // Save to DBs
     await saveToSupabase(url, summary, summaryUrdu)
     await saveToMongo(url, fullText)
 
-    return NextResponse.json({ summaryUrdu })  // ✅ THIS must always return JSON
+    return NextResponse.json({ summary, summaryUrdu })
   } catch (error) {
     console.error("Summarization failed:", error)
     return NextResponse.json({ error: "Something went wrong!" }, { status: 500 })

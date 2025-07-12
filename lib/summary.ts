@@ -1,8 +1,11 @@
 export function summarizeText(text: string): string {
   const sentences = text.match(/[^.!?]+[.!?]+/g) || []
 
-  // Filter very short sentences
-  const filtered = sentences.filter(s => s.trim().split(" ").length > 6)
+  const scored = sentences
+    .map((s) => ({ text: s.trim(), score: s.trim().split(" ").length }))
+    .filter((s) => s.score > 5)
+    .sort((a, b) => b.score - a.score)
 
-  return filtered.slice(0, 3).join(" ")
+  const topSentences = scored.slice(0, 3).map((s) => s.text)
+  return topSentences.join(" ")
 }

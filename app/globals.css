@@ -78,6 +78,29 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+.urdu-text {
+  font-family: "Noto Nastaliq Urdu", serif;
+  direction: rtl;
+  text-align: right;
+  font-size: 1.15rem;
+}
+
+.toggle-btn {
+  @apply transition-all duration-150 px-5 py-2 rounded-full font-semibold shadow-sm cursor-pointer;
+}
+
+select {
+  backdrop-filter: blur(5px);
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #ffffff;
+}
+@layer components {
+  .group:hover {
+    @apply shadow-2xl;
+  }
+}
+
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
