@@ -89,6 +89,13 @@ export default function HomePage() {
           </div>
         </div>
 
+        {/* Disclaimer for Dictionary mode */}
+        {method === "dictionary" && (
+          <div className="mb-6 px-4 py-3 rounded-xl bg-yellow-100/10 border border-yellow-400/30 text-yellow-200 text-sm font-medium shadow">
+            <span className="font-bold">Disclaimer:</span> The summary and translation shown below are simulated using static logic and a JavaScript dictionary. They do not represent real AI-generated content.
+          </div>
+        )}
+
         {/* Form */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
